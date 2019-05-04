@@ -31,9 +31,9 @@ function createNode(
 
     // retrieve an activated route that is used to be displayed, but is not currently displayed
   } else {
-    const detachedRouteHandle =
-        <DetachedRouteHandleInternal>routeReuseStrategy.retrieve(curr.value);
-    if (detachedRouteHandle) {
+    if (routeReuseStrategy.shouldAttach(curr.value)) {
+      const detachedRouteHandle =
+          <DetachedRouteHandleInternal>routeReuseStrategy.retrieve(curr.value);
       const tree: TreeNode<ActivatedRoute> = detachedRouteHandle.route;
       setFutureSnapshotsOfActivatedRoutes(curr, tree);
       return tree;

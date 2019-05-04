@@ -94,20 +94,20 @@ describe('create router state', () => {
       {path: 'a', component: ComponentA}, {path: 'b', component: ComponentB, outlet: 'left'},
       {path: 'c', component: ComponentC, outlet: 'left'}
     ];
-    spyOn(reuseStrategy, 'retrieve').and.callThrough();
+    spyOn(reuseStrategy, 'shouldAttach').and.callThrough();
 
     const prevState =
         createRouterState(reuseStrategy, createState(config, 'a(left:b)'), emptyState());
     advanceState(prevState);
 
     // Expect 2 calls as the baseline setup
-    expect(reuseStrategy.retrieve).toHaveBeenCalledTimes(2);
+    expect(reuseStrategy.shouldAttach).toHaveBeenCalledTimes(2);
 
     // This call should produce a reused activated route
     const state = createRouterState(reuseStrategy, createState(config, 'a(left:c)'), prevState);
 
     // Verify the retrieve method has been called one more time
-    expect(reuseStrategy.retrieve).toHaveBeenCalledTimes(3);
+    expect(reuseStrategy.shouldAttach).toHaveBeenCalledTimes(3);
   });
 });
 
